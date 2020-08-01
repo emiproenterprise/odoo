@@ -30,7 +30,7 @@ class ProductImage(models.Model):
     def _compute_can_image_1024_be_zoomed(self):
         for image in self:
             image.can_image_1024_be_zoomed = image.image_1920 and tools.is_image_size_above(image.image_1920, image.image_1024)
-
+            
     @api.depends('video_url')
     def _compute_embed_code(self):
         for image in self:
