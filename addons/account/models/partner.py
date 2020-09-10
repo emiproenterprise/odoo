@@ -119,10 +119,12 @@ class AccountFiscalPosition(models.Model):
     def _get_fpos_by_region(self, country_id=False, state_id=False, zipcode=False, vat_required=False):
         if not country_id:
             return False
+        #Use force company in case of multi company environment
+        company_id=self._context.get('force_company',self.env.company.id)
         base_domain = [
             ('auto_apply', '=', True),
             ('vat_required', '=', vat_required),
-            ('company_id', 'in', [self.env.company.id, False]),
+            ('company_id', 'in', [company_id, False]),
         ]
         null_state_dom = state_domain = [('state_ids', '=', False)]
         null_zip_dom = zip_domain = [('zip_from', '=', False), ('zip_to', '=', False)]
